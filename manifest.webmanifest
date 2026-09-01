@@ -1,0 +1,45 @@
+{
+  "name": "الجنرال للألعاب الإلكترونية - PS4 Host",
+  "short_name": "General PS4",
+  "description": "منظومة تشغيل الأوفلاين الخاصة بمحل الجنرال للألعاب الإلكترونية",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#090813",
+  "theme_color": "#090813",
+  "lang": "ar",
+  "dir": "rtl",
+  "categories": ["entertainment", "games", "utilities"],
+  "icons": [
+    {
+      "src": "./shop-logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./shop-logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "فتح المسار 5.05-9.60",
+      "url": "./505_960/",
+      "description": "الوصول السريع لإصدارات 5.05-9.60"
+    },
+    {
+      "name": "فتح المسار 10.00-11.02",
+      "url": "./1000_1102/",
+      "description": "الوصول السريع لإصدارات 10.00-11.02"
+    },
+    {
+      "name": "فتح المسار 11.50-13.00",
+      "url": "./1150-1300/",
+      "description": "الوصول السريع لإصدارات 11.50-13.00"
+    }
+  ]
+}
