@@ -1,10 +1,19 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" manifest="cache.appcache">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#080512">
 <title>الجنرال للألعاب الإلكترونية — PS4 11.50 - 13.00</title>
+
+<script>
+// Register the Service Worker from root so this page is controlled and can use SW caching
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/sw.js', { scope: '/' })
+    .then(() => console.log('Service Worker registered'))
+    .catch(() => console.log('Service Worker registration failed'));
+}
+</script>
 
 <style>
 :root {
