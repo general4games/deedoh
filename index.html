@@ -9,6 +9,15 @@
   <title>الجنرال للألعاب الإلكترونية — PS4 Host</title>
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="stylesheet" href="./css/app.css">
+
+  <script>
+  // Register Service Worker to enable modern offline caching (replaces AppCache)
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('/sw.js', { scope: '/' })
+      .then(() => console.log('Service Worker registered'))
+      .catch((err) => console.log('Service Worker registration failed', err));
+  }
+  </script>
 </head>
 <body>
   <div id="boot" class="overlay" aria-live="polite">
@@ -39,7 +48,7 @@
         </div>
         <div class="brand-text">
           <b data-shop-name>الجنرال للألعاب الإلكترونية</b>
-          <small data-shop-address>درنة — شارع الرفاعي</small>
+          <small data-shop-address>درنة — شارع الرفافي</small>
         </div>
       </div>
 
