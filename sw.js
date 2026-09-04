@@ -60,6 +60,12 @@ async function deleteOldCaches() {
 }
 
 async function cacheFirst(request) {
+  // For navigation requests prefer the cached index.html (SPA fallback)
+  if (request.mode === "navigate") {
+    const rootCached = await caches.match(new Request("./index.html"));
+    if (rootCached) return rootCached;
+  }
+
   const cached = await caches.match(request);
   if (cached) return cached;
 
@@ -73,6 +79,7 @@ async function cacheFirst(request) {
 
     return response;
   } catch (error) {
+    // If fetch fails for navigation, try the SPA fallback (index.html)
     if (request.mode === "navigate") {
       const fallback = await caches.match("./index.html");
       if (fallback) return fallback;
@@ -99,6 +106,9 @@ async function cacheStatus() {
 }
 
 self.addEventListener("install", (event) => {
+  // Install will fail if any core asset cannot be fetched/cached. This is intentional
+  // so the SW doesn't activate partially. Keep the behavior but provide clearer
+  // failure handling in the client.
   event.waitUntil(
     cacheCoreAssets()
       .then(() => self.skipWaiting()),
