@@ -1,22 +1,42 @@
 const CACHE_NAME = "g2-core-v2026.09.01";
 const RUNTIME_CACHE = "g2-runtime-v2026.09.01";
 
+// Core assets: HTML, JS, CSS, manifest and small media required for app shell.
+// NOTE: large binary patches (.bin) are intentionally NOT pre-cached to avoid install failures
+// and long install times. They will be cached on demand via the runtime cache when fetched.
 const CORE_ASSETS = [
-  "./",
-  "./index.html",
-  "./manifest.webmanifest",
-  "./version.json",
-  "./css/app.css",
-  "./js/app.js",
-  "./js/audio.js",
-  "./js/cache-manager.js",
-  "./js/config.js",
-  "./js/firmware.js",
-  "./js/state.js",
-  "./js/storage.js",
-  "./js/ui.js",
-  "./shop-logo.png",
-  "./song.mp3",
+  '/',
+  '/index.html',
+
+  // Versioned pages
+  '/1150-1300/index.html',
+  '/1150-1300/run_lapse.html',
+  '/1150-1300/run_poops.html',
+
+  // App shell & static code
+  '/css/app.css',
+  '/js/app.js',
+  '/js/audio.js',
+  '/js/cache-manager.js',
+  '/js/config.js',
+  '/js/firmware.js',
+  '/js/state.js',
+  '/js/storage.js',
+  '/js/ui.js',
+
+  // 1150-1300 specific scripts & assets
+  '/1150-1300/chain_lapse.js',
+  '/1150-1300/chain_poops.js',
+  '/1150-1300/core.js',
+  '/1150-1300/core.js?v=10',
+  '/1150-1300/mem.js',
+  '/1150-1300/int64.js',
+  '/1150-1300/ps4_offsets.js',
+  '/1150-1300/rpc_worker.js',
+  '/1150-1300/logo_raw.png',
+
+  // Other pages you appear to have
+  '/1000_1102/index.html'
 ];
 
 const CACHE_PREFIXES = ["g2-core-v", "g2-runtime-v"];
@@ -31,7 +51,7 @@ function isSameOrigin(request) {
 
 function isCacheable(request) {
   const url = new URL(request.url);
-  return /\.(html?|css|js|json|png|jpe?g|webp|gif|svg|ico|mp3|wav|ogg|bin)$/i.test(url.pathname);
+  return /\.(html?|css|js|json|png|jpe?g|webp|gif|svg|ico|mp3|wav|ogg)$/i.test(url.pathname);
 }
 
 async function cacheCoreAssets() {
@@ -62,7 +82,7 @@ async function deleteOldCaches() {
 async function cacheFirst(request) {
   // For navigation requests prefer the cached index.html (SPA fallback)
   if (request.mode === "navigate") {
-    const rootCached = await caches.match(new Request("./index.html"));
+    const rootCached = await caches.match(new Request('/index.html'));
     if (rootCached) return rootCached;
   }
 
@@ -81,7 +101,7 @@ async function cacheFirst(request) {
   } catch (error) {
     // If fetch fails for navigation, try the SPA fallback (index.html)
     if (request.mode === "navigate") {
-      const fallback = await caches.match("./index.html");
+      const fallback = await caches.match('/index.html');
       if (fallback) return fallback;
     }
     throw error;
